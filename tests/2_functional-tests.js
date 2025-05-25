@@ -67,9 +67,7 @@ suite("Functional Tests", function () {
             .send({})
             .end(function (err, res) {
               assert.equal(res.status, 400);
-              assert.deepEqual(res.body, {
-                error: "missing required field title",
-              });
+              assert.equal(res.text, "missing required field title");
               done();
             });
         });
@@ -109,7 +107,7 @@ suite("Functional Tests", function () {
           .get(`/api/books/testID`)
           .end(function (err, res) {
             assert.equal(res.status, 400);
-            assert.equal(res.body.error, "no book exists");
+            assert.equal(res.text, "no book exists");
             done();
           });
       });
@@ -194,10 +192,7 @@ suite("Functional Tests", function () {
                 .send({})
                 .end(function (err, res) {
                   assert.equal(res.status, 400);
-                  assert.equal(
-                    res.body.error,
-                    "missing required field comment"
-                  );
+                  assert.equal(res.text, "missing required field comment");
                   done();
                 });
             });
@@ -210,7 +205,7 @@ suite("Functional Tests", function () {
             .send({ comment: "This is a comment" })
             .end(function (err, res) {
               assert.equal(res.status, 400);
-              assert.equal(res.body.error, "no book exists");
+              assert.equal(res.text, "no book exists");
               done();
             });
         });
@@ -243,7 +238,7 @@ suite("Functional Tests", function () {
           .delete("/api/books/testID")
           .end(function (err, res) {
             assert.equal(res.status, 400);
-            assert.equal(res.body.error, "no book exists");
+            assert.equal(res.text, "no book exists");
             done();
           });
       });

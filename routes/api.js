@@ -81,7 +81,7 @@ module.exports = function (app) {
       //response will contain new book object including atleast _id and title
 
       if (!title) {
-        return res.status(400).json({ error: "missing required field title" });
+        return res.status(400).send("missing required field title");
       }
 
       try {
@@ -129,13 +129,13 @@ module.exports = function (app) {
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
 
       if (!mongoose.Types.ObjectId.isValid(bookid)) {
-        return res.status(400).json({ error: "no book exists" });
+        return res.status(400).send("no book exists");
       }
 
       try {
         const book = await Book.findById(bookid);
         if (!book) {
-          return res.status(400).json({ error: "no book exists" });
+          return res.status(400).send("no book exists");
         }
         res.status(200).json({
           _id: book._id,
@@ -165,19 +165,17 @@ module.exports = function (app) {
       //json res format same as .get
 
       if (!comment) {
-        return res
-          .status(400)
-          .json({ error: "missing required field comment" });
+        return res.status(400).send("missing required field comment");
       }
 
       if (!mongoose.Types.ObjectId.isValid(bookid)) {
-        return res.status(400).json({ error: "no book exists" });
+        return res.status(400).send("no book exists");
       }
 
       try {
         const book = await Book.findById(bookid);
         if (!book) {
-          return res.status(400).json({ error: "no book exists" });
+          return res.status(400).send("no book exists");
         }
 
         book.comments.push(comment);
@@ -208,13 +206,13 @@ module.exports = function (app) {
       //if successful response will be 'delete successful'
 
       if (!mongoose.Types.ObjectId.isValid(bookid)) {
-        return res.status(400).json({ error: "no book exists" });
+        return res.status(400).send("no book exists");
       }
 
       try {
         const book = await Book.findByIdAndDelete(bookid);
         if (!book) {
-          return res.status(400).json({ error: "no book exists" });
+          return res.status(400).send("no book exists");
         }
         res.status(200).json({ message: "delete successful" });
       } catch (err) {
