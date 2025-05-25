@@ -14,6 +14,10 @@ const server = require("../server");
 chai.use(chaiHttp);
 
 suite("Functional Tests", function () {
+  /*
+   * ----[EXAMPLE TEST]----
+   * Each test should completely test the response of the API end-point including response status code!
+   */
   test("#example Test GET /api/books", function (done) {
     chai
       .request(server)
@@ -21,23 +25,21 @@ suite("Functional Tests", function () {
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.isArray(res.body, "response should be an array");
-        if (res.body.length > 0) {
-          assert.property(
-            res.body[0],
-            "commentcount",
-            "Books in array should contain commentcount"
-          );
-          assert.property(
-            res.body[0],
-            "title",
-            "Books in array should contain title"
-          );
-          assert.property(
-            res.body[0],
-            "_id",
-            "Books in array should contain _id"
-          );
-        }
+        assert.property(
+          res.body[0],
+          "commentcount",
+          "Books in array should contain commentcount"
+        );
+        assert.property(
+          res.body[0],
+          "title",
+          "Books in array should contain title"
+        );
+        assert.property(
+          res.body[0],
+          "_id",
+          "Books in array should contain _id"
+        );
         done();
       });
   });
@@ -67,7 +69,9 @@ suite("Functional Tests", function () {
             .send({})
             .end(function (err, res) {
               assert.equal(res.status, 400);
-              assert.equal(res.body.error, "missing required field title");
+              assert.deepEqual(res.body, {
+                error: "missing required field title",
+              });
               done();
             });
         });
