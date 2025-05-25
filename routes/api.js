@@ -70,7 +70,7 @@ module.exports = function (app) {
 
       try {
         await Book.deleteMany({});
-        res.status(200).json({ message: "complete delete successful" });
+        res.status(200).send("complete delete successful");
       } catch (err) {
         res.status(500).json({ error: "Internal server error" });
       }
@@ -146,7 +146,7 @@ module.exports = function (app) {
         if (!book) {
           return res.send("no book exists");
         }
-        res.status(200).json({ message: "delete successful" });
+        res.status(200).send("delete successful");
       } catch (err) {
         res.status(500).json({ error: "Internal server error" });
       }
